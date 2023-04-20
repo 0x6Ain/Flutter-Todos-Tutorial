@@ -19,6 +19,7 @@ class Todo extends Equatable {
           'is can not be null and should be empty',
         ),
         id = id ?? const Uuid().v4();
+
   final String id;
   final String title;
   final String description;

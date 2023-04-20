@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todos/presentations/todo_edit_page.dart';
 import 'package:flutter_todos/presentations/todos_overview_Page.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,8 @@ class _HomePageState extends State<HomePage> {
         children: const [TodosOverviewpage()],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        key: const Key('homeView_addTodo_floatingActionButton'),
+        onPressed: () => Navigator.of(context).push(TodoEditPage.route()),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(100))),
         child: const Icon(Icons.add),
