@@ -82,7 +82,6 @@ class LocalStorageTodosApi {
     return completedTodosAmount;
   }
 
-  @override
   Future<int> completeAll({required bool isCompleted}) async {
     final todos = [..._todoStreamController.value];
     final changedTodosAmount =
@@ -93,5 +92,9 @@ class LocalStorageTodosApi {
     _todoStreamController.add(newTodos);
     await _setValue(kTodosCollectionKey, json.encode(newTodos));
     return changedTodosAmount;
+  }
+
+  void deleteAll() {
+    _todoStreamController.value = [];
   }
 }

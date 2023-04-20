@@ -27,13 +27,13 @@ class Todo extends Equatable {
   Todo copyWith({
     String? id,
     String? title,
-    String? descrpition,
+    String? description,
     bool? isCompleted,
   }) {
     return Todo(
       id: id ?? this.id,
       title: title ?? this.title,
-      description: description,
+      description: description ?? this.description,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }

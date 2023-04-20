@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_todos/data/dummy.dart';
 import 'package:flutter_todos/infra/local_storage_todos_api.dart';
 import 'package:flutter_todos/models/todos_view_filter.dart';
 
@@ -25,6 +26,10 @@ class TodoOverviewBloc extends Bloc<TodoOverviewEvents, TodoOverviewState> {
   Future<void> _onSubscriptionRequested(
       TodoOverviewEvents event, Emitter<TodoOverviewState> emit) async {
     emit(state.copyWith(status: () => TodosOverviewStatus.loading));
+    _todoRepository.deleteAll();
+    for (final todo in dummyTodo) {
+      _todoRepository.saveTodo(todo);
+    }
 
     await emit.forEach<List<Todo>>(
       _todoRepository.getTodos(),
