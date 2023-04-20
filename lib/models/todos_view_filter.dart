@@ -10,7 +10,7 @@ extension TodoViewFilter on TodosViewFilter {
       case TodosViewFilter.activeOnly:
         return !todo.isCompleted;
       case TodosViewFilter.completedOnly:
-        return !todo.isCompleted;
+        return todo.isCompleted;
     }
   }
 

@@ -18,11 +18,32 @@ class TodoListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('todo ListTile dismissabele ${todo.title}'),
+      key: Key('todoListTile_dismissible_${todo.id}'),
+      onDismissed: onDismissed,
+      direction: DismissDirection.endToStart,
+      background: Container(
+        alignment: Alignment.centerRight,
+        // color: theme.colorScheme.error,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: const Icon(
+          Icons.delete,
+          color: Color(0xAAFFFFFF),
+        ),
+      ),
       child: ListTile(
         onTap: onTap,
         title: Text(todo.title),
         subtitle: Text(todo.description),
+        leading: Checkbox(
+          shape: const ContinuousRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          value: todo.isCompleted,
+          onChanged: onToggleCompleted == null
+              ? null
+              : (value) => onToggleCompleted!(value!),
+        ),
+        trailing: onTap == null ? null : const Icon(Icons.chevron_right),
       ),
     );
   }

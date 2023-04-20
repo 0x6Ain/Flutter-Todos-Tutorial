@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todos/applications/todo/todo_overview_bloc/todo_overview_bloc.dart';
 import 'package:flutter_todos/infra/local_storage_todos_api.dart';
+import 'package:flutter_todos/presentations/todo_edit_page.dart';
 import 'package:flutter_todos/presentations/widgets/todo_list_tile.dart';
+import 'package:flutter_todos/presentations/widgets/todos_overview_filter_button.dart';
 
 class TodosOverviewpage extends StatelessWidget {
   const TodosOverviewpage({super.key});
@@ -29,7 +31,7 @@ class TodosOverViews extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter todo'),
-        actions: const [],
+        actions: const [TodosOverviewFilterButton()],
       ),
       body: MultiBlocListener(
         listeners: [
@@ -64,7 +66,27 @@ class TodosOverViews extends StatelessWidget {
             return CupertinoScrollbar(
                 child: ListView(
               children: [
-                for (final todo in state.filteredTodos) TodoListTile(todo: todo)
+                for (final todo in state.filteredTodos)
+                  TodoListTile(
+                    todo: todo,
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(TodoEditPage.route(initialTodo: todo));
+                    },
+                    onDismissed: (_) {
+                      context
+                          .read<TodoOverviewBloc>()
+                          .add(TodosOverviewTodoDeleted(todo));
+                    },
+                    onToggleCompleted: (isCompleted) {
+                      context.read<TodoOverviewBloc>().add(
+                            TodosOverviewTodoCompletionToggled(
+                              todo: todo,
+                              isCompleted: isCompleted,
+                            ),
+                          );
+                    },
+                  ),
               ],
             ));
           },
